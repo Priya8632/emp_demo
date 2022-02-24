@@ -95,7 +95,6 @@ if (!$myData) {
                 <th>Password</th>
                 <td><?php echo base64_decode($myData['p_word']); ?> </td>
             </tr>
-
             <tr>
                 <th>Hobbies</th>
                 <td><?php echo $myData['hobby']; ?> </td>

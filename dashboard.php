@@ -81,7 +81,7 @@ if (!$result) {
                     <td><?php echo $data['fname']; ?></td>
                     <td><?php echo $data['lname'];?></td>
                     <td><?php echo $data['email']; ?></td>
-                    <td><?php echo base64_decode($data['p_word']); ?></td>
+                    <td><?php echo $data['p_word']; ?></td>
                     <td><?php echo $data['gender']; ?></td>
                     <td><?php echo $data['age']; ?></td>
                     <td><?php echo $data['dept']; ?></td>

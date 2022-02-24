@@ -1,7 +1,7 @@
  <?php
 
         include 'config.php';
-        session_start();
+        session_start(); 
 
         
         if (isset($_SESSION['id'])) {
@@ -81,8 +81,9 @@
 
             <div class="form-group">
                 <label for="">PASSWORD</label>
-                <input type="text" class="form-control" name="password">
+                <input type="password" class="form-control" name="password">
             </div>
+            <p class="login-register-text">Not have an account?<a href="ragister.php">Ragister here</a></p>
 
             <div class="form-group">
                 <input type="submit" name="submit" class="btn btn-info">

@@ -78,7 +78,7 @@ if(isset($_REQUEST['submit'])){
             </div>
             <div class="form-group">
                 <label for="">PASSWORD</label>
-                <input type="text" class="form-control" name="pw">
+                <input type="password" class="form-control" name="pw">
             </div>
             
             <div class="form-group">

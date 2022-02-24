@@ -1,5 +1,7 @@
 <?php
 
+
+
 include 'config.php';
 $id = $_GET['update'];
 $query = "SELECT * FROM EMPLOYEE WHERE id = $id";
@@ -7,16 +9,65 @@ $result = mysqli_query($conn,$query);
 $data =mysqli_fetch_assoc($result);
 
 $error ="";
-$fnamearr = $lnamearr = $emailarr = $pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = "";
-$fname = $lname =$email = $gender = $age = $dept = $doj = $sal ="";
-
+$fnamearr = $lnamearr = $emailarr = $pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $imgarr= "";
+//$filesize = $_FILES['file']['size']; 
 if(isset($_POST['submit'])){
+
+    $filesize = $_FILES['file']['size'];   
+    
+    if(empty($_POST['fname'])){
+        $fnamearr = "fname is required";}
+    elseif(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['fname'])){
+        $fnamearr = "only character and letter ";    }
+    elseif(empty($_POST['lname'])){
+        $lnamearr = "lname is required";}
+    elseif(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['lname'])){
+        $lnamearr = "only character and letter ";     }
+    elseif(empty($_POST['email'])){
+        $emailarr = "email is required";}
+    elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+        $emailarr = "invaild formet";}
+    elseif(empty($_POST['p_word'])){
+        $pwarr = "password is required"; }
+    elseif(!preg_match("/[a-z'@,!,#,$,%,^,&,*,+']+/",$_POST['p_word'])){
+        $pwarr = "minimum 1 small";    }
+    elseif(!preg_match("/[A-Z]+/",$_POST['p_word'])){
+        $pwarr = "minum 1 capital"; }
+    elseif(!preg_match("/[0-9]/",$_POST['p_word'])){
+        $pwarr = "1 number";}
+    elseif(strlen($_POST['p_word']) > 8 || strlen($_POST['p_word']) < 8 ){
+        $pwarr = "8 length is required";}
+    elseif(empty($_POST['gender'])){
+        $genderarr = "gender is required";}
+    elseif(empty($_POST['age'])){
+        $agearr = "age is required";}
+    elseif($_POST['age']<18){
+        $agearr =" not eligibale for job ";}
+    elseif(empty($_POST['doj'])){
+        $dojarr = "doj is required";}
+    elseif($_POST['doj']>date('Y-m-d')){
+        $dojarr = "not valid future date";} 
+    elseif(empty($_POST['sal'])){
+        $salarr = "sal is required";}
+    elseif($_POST['sal']<0){
+        $salarr = "minus sal is not allow";}
+    elseif(preg_match("/[a-zA_Z]/",$_POST['sal'])){
+        $salarr ="alpha value is not allow";} 
+    elseif(empty($_POST['hobby'])){
+        $hobbiarr = "optional";}
+    elseif($filesize > 1000000){
+        $imgarr = "image file must be less than 1 mb"; } 
+    elseif(empty($filesize)){
+        $imgarr = "image file muat be required";}     
+
+    else{
+
 
     $id = $data['id'];
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
-    $pw = $_POST['p_word'];
+    $pw = base64_encode($_POST['p_word']);
     $cw = $_POST['c_word'];
     $gender = $_POST['gender'];
     $age = $_POST['age'];
@@ -38,9 +89,7 @@ if(isset($_POST['submit'])){
     if($chk){
         header('location:dashboard.php');
     }
-    else{
-        echo mysqli_error($conn);
-    }
+}
 }
 
 
@@ -70,7 +119,7 @@ if(isset($_POST['submit'])){
     
     <div class="container" >
         
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
         <h2>Ragister Form</h2>
 
             <div class="form-group">
@@ -90,7 +139,7 @@ if(isset($_POST['submit'])){
 
             <div class="form-group">
                 <label for="">PASSWORD</label>
-                <input type="password" name="p_word" class="form-control" value=<?php echo $data['p_word'];?>><span class="error">* <?php echo $pwarr; ?></span>
+                <input type="password" name="p_word" class="form-control" value=<?php echo base64_decode($data['p_word']);?>><span class="error">* <?php echo $pwarr; ?></span>
             </div>
             
             <div class="form-group">
@@ -127,30 +176,14 @@ if(isset($_POST['submit'])){
             </div>
             <div class="form-group">
                 <label>HOBBIES</label><br>
-                <input type="checkbox" value="writing" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('writing',$data)){
-                        echo "checked";
-                    }
-                }  ?>">WRITING<br>
-                <input type="checkbox" value="playing" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('playing',$data)){
-                        echo "checked";
-                    }
-                }  ?>">PLAYING<br>
-                <input type="checkbox" value="cooking" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('cooking',$data)){
-                        echo "checked";
-                    }
-                }  ?>">COOKING<br>
-                <input type="checkbox" value="reading" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('reading',$data)){
-                        echo "checked";
-                    }
-                }  ?>">READING<br>
+                <input type="checkbox" value="writing" name="hobby[]"<?php if(in_array('writing',explode(',',$data['hobby']))){ echo 'checked';}?>>WRITING<br>
+                <input type="checkbox" value="playing" name="hobby[]"<?php if(in_array('playing',explode(',',$data['hobby']))){ echo 'checked';}?>>PLAYING<br>
+                <input type="checkbox" value="cooking" name="hobby[]"<?php if(in_array('cooking',explode(',',$data['hobby']))){ echo 'checked';}?>>COOKING<br>
+                <input type="checkbox" value="reading" name="hobby[]"<?php if(in_array('reading',explode(',',$data['hobby']))){ echo 'checked';}?>>READING<br>
             </div>
 
             <div class="form-group">
-                <input type="file" name="file" value=<?php echo $data['img'];?>>
+                <input type="file" name="file"><span class="error">*<?php echo $imgarr; ?></span>
             </div>
 
 

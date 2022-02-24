@@ -1,5 +1,13 @@
 <?php
 
+session_start();
+if(isset($_SESSION['id'])){
+    header('location:user_welcome.php');
+}
+if(isset($_SESSION['aid'])){
+    header('location:dashboard.php');
+}
+
 if(isset($_REQUEST['submit'])){
     header('location:ragister.php');
 }

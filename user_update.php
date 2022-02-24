@@ -25,7 +25,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
-    $pw = $_POST['p_word'];
+    $pw = base64_encode($_POST['p_word']);
     $cw = $_POST['c_word'];
     $gender = $_POST['gender'];
     $age = $_POST['age'];
@@ -33,7 +33,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
     $doj = $_POST['doj'];
     $sal = $_POST['sal'];
     $chkbox = $_POST['hobby'];
-    $alldata= explode(",",$chkbox);
+    $alldata= implode(",",$chkbox);
 
       $target_dir = "image/";
     
@@ -100,7 +100,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
 
             <div class="form-group">
                 <label for="">PASSWORD</label>
-                <input type="password" name="p_word" class="form-control" value=<?php echo $rows['p_word'];?>><span class="error">* <?php echo $pwarr; ?></span>
+                <input type="password" name="p_word" class="form-control" value=<?php echo base64_decode($rows['p_word']);?>><span class="error">* <?php echo $pwarr; ?></span>
             </div>
             
             <div class="form-group">
@@ -142,26 +142,10 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
             </div>
             <div class="form-group">
                 <label>HOBBIES</label><br>
-                <input type="checkbox" value="writing" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('writing',$alldata)){
-                        echo "checked";
-                    }
-                }  ?>">WRITING<br>
-                <input type="checkbox" value="playing" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('playing',$alldata)){
-                        echo "checked";
-                    }
-                }  ?>">PLAYING<br>
-                <input type="checkbox" value="cooking" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('cooking',$alldata)){
-                        echo "checked";
-                    }
-                }  ?>">COOKING<br>
-                <input type="checkbox" value="reading" name="hobby[]" value="<?php if(isset($_POST['hobby'])){
-                    if(in_array('reading',$alldata)){
-                        echo "checked";
-                    }
-                }  ?>">READING<br>
+                <input type="checkbox" value="writing" name="hobby[]" <?php if(in_array('writing',explode(',',$rows['hobby']))){ echo 'checked';}?> >WRITING<br>
+                <input type="checkbox" value="playing" name="hobby[]" <?php if(in_array('playing',explode(',',$rows['hobby']))){ echo 'checked';}?> >PLAYING<br>
+                <input type="checkbox" value="cooking" name="hobby[]" <?php if(in_array('cooking',explode(',',$rows['hobby']))){ echo 'checked';}?>>COOKING<br>
+                <input type="checkbox" value="reading" name="hobby[]" <?php if(in_array('reading',explode(',',$rows['hobby']))){ echo 'checked';}?>>READING<br>
             </div>
 
             <div class="form-group">

@@ -6,18 +6,20 @@ session_start();
 if (isset($_SESSION['id'])) {    
     header('location:user_welcome.php');
 }
-
+$error="";
+$fnamearr = $lnamearr =$pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $hobbiarr= $emailarr = $imgarr="";
+$fname = $lname = $email = $gender = $age = $dept = $doj = $sal = $pw = $cw ="";
 $query = "SELECT * FROM EMPLOYEE";
-
-if(!mysqli_query($conn,$query)){
+if(isset($_REQUEST['submit'])){
+    if(!mysqli_query($conn,$query)){
     
     $createtbl = "CREATE TABLE EMPLOYEE(
         id int(10) auto_increment primary key,
         fname text,
         lname text,
         email text,
-        p_word varchar(10),
-        c_word varchar(10),
+        p_word varchar(30),
+        c_word varchar(30),
         gender text,
         age int(3),
         dept text,
@@ -32,14 +34,7 @@ if(!mysqli_query($conn,$query)){
     }
 }
 
-$error="";
-$fnamearr = $lnamearr =$pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $hobbiarr= $emailarr = $imgarr="";
-$fname = $lname = $email = $gender = $age = $dept = $doj = $sal = $pw = $cw ="";
-
-
-if(isset($_REQUEST['submit'])){
-
-    $filesize = $_FILES['file']['size'];   
+   $filesize = $_FILES['file']['size'];   
     
     if(empty($_POST['fname'])){
         $fnamearr = "fname is required";}
@@ -84,7 +79,9 @@ if(isset($_REQUEST['submit'])){
     elseif(empty($_POST['hobby'])){
         $hobbiarr = "optional";}
     elseif($filesize > 1000000){
-        $imgarr = "image file must be less than 1 mb"; }      
+        $imgarr = "image file must be less than 1 mb"; } 
+    elseif(empty($filesize)){
+        $imgarr = "image file muat be required";}     
 
     else{
 
@@ -113,7 +110,7 @@ if(isset($_REQUEST['submit'])){
     // if($result > 0){
     //     $emailarr = "alredy exist your email";
     // }
-    // else{
+    //  else{
         $insert = "INSERT INTO EMPLOYEE
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
@@ -139,8 +136,8 @@ if(isset($_REQUEST['submit'])){
     <style>
         form{
             padding:30px;
-            background-color:lightgray;  
-        }
+            background-color:lightgray;
+        }  
         .error{
             color:red;
         }
