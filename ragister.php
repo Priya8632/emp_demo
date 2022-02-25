@@ -104,13 +104,13 @@ if(isset($_REQUEST['submit'])){
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
 
-    // $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
-    // $emailchk = mysqli_query($conn,$email);
-    // $result = mysqli_num_rows($emailchk);
-    // if($result > 0){
-    //     $emailarr = "alredy exist your email";
-    // }
-    //  else{
+    $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
+    $emailchk = mysqli_query($conn,$email);
+    $result = mysqli_num_rows($emailchk);
+    if($result > 0){
+        $emailarr = "alredy exist your email";
+    }
+     
         $insert = "INSERT INTO EMPLOYEE
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
@@ -119,7 +119,7 @@ if(isset($_REQUEST['submit'])){
             header('location:user_login.php');
         }
         
-        //}
+    
     } 
 
 }

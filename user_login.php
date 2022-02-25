@@ -13,27 +13,27 @@
 
         if (isset($_POST['submit'])) {
 
+           
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password = base64_encode($_POST['password']);
 
-            $sql = "SELECT * FROM employee WHERE email='$email' AND P_word ='$password'";
+            $sql = "SELECT * FROM employee WHERE email='$email' AND p_word='$password'";
             $query = mysqli_query($conn, $sql);
             $arr = mysqli_fetch_assoc($query);
             $row = mysqli_num_rows($query);
             echo $row;
-            if ($row) {
-                
-                if ($arr['p_word'] == $password) {
-
+         
+            if ($row > 0) {
+                    
                     $_SESSION['id'] = $arr['id'];
                     setcookie('id', $arr['id'], time() + 60*10);
                     header('location:user_welcome.php');
-                } 
+                }
                 else {
                     echo "invalid email password";
 
                 }
-            }
+            
         }
         ?> 
 
@@ -47,11 +47,11 @@
     <title>Document</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
+        /* body{
             background-image: url("image/a.jpg");
             background-repeat: no-repeat;
             background-size: cover;
-        }
+        } */
         .container {
             margin-top: 30px;
             padding: 40px;
