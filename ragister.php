@@ -9,6 +9,7 @@ if (isset($_SESSION['id'])) {
 $error="";
 $fnamearr = $lnamearr =$pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $hobbiarr= $emailarr = $imgarr="";
 $fname = $lname = $email = $gender = $age = $dept = $doj = $sal = $pw = $cw ="";
+
 $query = "SELECT * FROM EMPLOYEE";
 if(isset($_REQUEST['submit'])){
     if(!mysqli_query($conn,$query)){
@@ -85,6 +86,7 @@ if(isset($_REQUEST['submit'])){
 
     else{
 
+    
     $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $email = $_POST['email'];
@@ -97,27 +99,28 @@ if(isset($_REQUEST['submit'])){
     $sal = $_POST['sal'];
     $chkbox = $_POST['hobby'];
     $alldata= implode(",",$chkbox);
-    
 
     $target_dir = "image/";
 
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
 
-    $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
-    $emailchk = mysqli_query($conn,$email);
-    $result = mysqli_num_rows($emailchk);
-    if($result > 0){
-        $emailarr = "alredy exist your email";
-    }
-     
+    // $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
+    // $emailchk = mysqli_query($conn,$email);
+    // $result = mysqli_num_rows($emailchk);
+    // if($result > 0){
+    //     $emailarr = "alredy exist your email";
+    // }
+    
         $insert = "INSERT INTO EMPLOYEE
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
-
+    
         if(mysqli_query($conn,$insert)){
             header('location:user_login.php');
         }
+    
+    
         
     
     } 

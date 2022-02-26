@@ -46,7 +46,7 @@ if (!$myData) {
 </head>
 <body>
 
-<nav class="bg-warning">
+<nav class="bg-warning p-3">
     <div class="container-fluid">
     <h2>Welcome to: <?php  echo $myData['email']; ?></h2> 
     <a href="user_logout.php" class="btn btn-danger">log out</a>
@@ -54,6 +54,7 @@ if (!$myData) {
 </nav>
 
     <div class="container">
+        <h1>User Detalis</h1>
         <table class="table table-borderless table-dark">
             <tr>
                 <th class="th-dark">Id</th>

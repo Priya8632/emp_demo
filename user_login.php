@@ -21,10 +21,11 @@
             $query = mysqli_query($conn, $sql);
             $arr = mysqli_fetch_assoc($query);
             $row = mysqli_num_rows($query);
-            echo $row;
+            //echo $row;
          
             if ($row > 0) {
                     
+                //echo $_POST['p_word'];
                     $_SESSION['id'] = $arr['id'];
                     setcookie('id', $arr['id'], time() + 60*10);
                     header('location:user_welcome.php');

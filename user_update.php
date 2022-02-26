@@ -16,10 +16,59 @@ $query = "SELECT * FROM EMPLOYEE WHERE id = $id";
 $result = mysqli_query($conn,$query);
 $rows = mysqli_fetch_assoc($result);
 
-$fnamearr = $lnamearr = $emailarr = $pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = "";
+$fnamearr = $lnamearr = $emailarr = $pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $imgarr ="";
 $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chkbox = $alldata= "";
 
  if(isset($_POST['submit'])){
+
+    $filesize = $_FILES['file']['size'];   
+    
+    if(empty($_POST['fname'])){
+        $fnamearr = "fname is required";}
+    elseif(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['fname'])){
+        $fnamearr = "only character and letter ";    }
+    elseif(empty($_POST['lname'])){
+        $lnamearr = "lname is required";}
+    elseif(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['lname'])){
+        $lnamearr = "only character and letter ";     }
+    elseif(empty($_POST['email'])){
+        $emailarr = "email is required";}
+    elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
+        $emailarr = "invaild formet";}
+    elseif(empty($_POST['p_word'])){
+        $pwarr = "password is required"; }
+    elseif(!preg_match("/[a-z'@,!,#,$,%,^,&,*,+']+/",$_POST['p_word'])){
+        $pwarr = "minimum 1 small";    }
+    elseif(!preg_match("/[A-Z]+/",$_POST['p_word'])){
+        $pwarr = "minum 1 capital"; }
+    elseif(!preg_match("/[0-9]/",$_POST['p_word'])){
+        $pwarr = "1 number";}
+    elseif(strlen($_POST['p_word']) > 8 || strlen($_POST['p_word']) < 8 ){
+        $pwarr = "8 length is required";}
+    elseif(empty($_POST['gender'])){
+        $genderarr = "gender is required";}
+    elseif(empty($_POST['age'])){
+        $agearr = "age is required";}
+    elseif($_POST['age']<18){
+        $agearr =" not eligibale for job ";}
+    elseif(empty($_POST['doj'])){
+        $dojarr = "doj is required";}
+    elseif($_POST['doj']>date('Y-m-d')){
+        $dojarr = "not valid future date";} 
+    elseif(empty($_POST['sal'])){
+        $salarr = "sal is required";}
+    elseif($_POST['sal']<0){
+        $salarr = "minus sal is not allow";}
+    elseif(preg_match("/[a-zA_Z]/",$_POST['sal'])){
+        $salarr ="alpha value is not allow";} 
+    elseif(empty($_POST['hobby'])){
+        $hobbiarr = "optional";}
+    elseif($filesize > 1000000){
+        $imgarr = "image file must be less than 1 mb"; } 
+    elseif(empty($filesize)){
+        $imgarr = "image file muat be required";}     
+
+    else{
 
     $id = $rows['id'];
     $fname = $_POST['fname'];
@@ -46,11 +95,12 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
    
 
     $update = "UPDATE EMPLOYEE SET fname='$fname',lname='$lname',p_word ='$pw',email ='$email',gender='$gender',age='$age',dept='$dept',
-                                                                doj='$doj',sal='$sal',hobby='$alldata' where id=$id";
+                                                                doj='$doj',sal='$sal',hobby='$alldata',img='$imagePath' where id='$id'";
     $chk = mysqli_query($conn,$update);
     if($chk){
         header('location:user_welcome.php');
     }
+ }
 }
 
 
@@ -80,7 +130,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
     
     <div class="container" >
         
-        <form action="" method="POST">
+        <form action="" method="POST" enctype="multipart/form-data">
         <h2>Ragister Form</h2>
 
             <div class="form-group">
@@ -149,7 +199,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
             </div>
 
             <div class="form-group">
-                <input type="file" name="file" value=<?php echo $rows['img'];?>>
+                <input type="file" name="file"><span class="error">*<?php  echo $imgarr;?></span>
             </div>
 
 
