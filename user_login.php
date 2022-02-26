@@ -1,9 +1,7 @@
  <?php
-
         include 'config.php';
         session_start(); 
-
-        
+      
         if (isset($_SESSION['id'])) {
             header('location:user_welcome.php');
         }
@@ -11,30 +9,38 @@
             header('location:user_welcome.php');
         }
 
+        $emailarr = $passarr = "";
+
         if (isset($_POST['submit'])) {
 
-           
             $email = $_POST['email'];
-            $password = base64_encode($_POST['password']);
+            $password = $_POST['password'];
 
-            $sql = "SELECT * FROM employee WHERE email='$email' AND p_word='$password'";
+            if (empty($email)) {
+                $emailarr = " email required";
+            } elseif (empty($password)) {
+                $passarr = "password required";
+            } else {
+
+            $sql = "SELECT * FROM employee WHERE email='$email'";
             $query = mysqli_query($conn, $sql);
             $arr = mysqli_fetch_assoc($query);
             $row = mysqli_num_rows($query);
-            //echo $row;
-         
-            if ($row > 0) {
-                    
-                //echo $_POST['p_word'];
+        
+            if ($row) {
+                    if($arr['p_word'] == base64_encode($password)){
+
                     $_SESSION['id'] = $arr['id'];
                     setcookie('id', $arr['id'], time() + 60*10);
                     header('location:user_welcome.php');
-                }
-                else {
-                    echo "invalid email password";
-
-                }
-            
+                     }
+                    else {
+                        echo "invalid  password";
+                    }
+            }else{
+                echo "invalid email";
+            }
+            }
         }
         ?> 
 
@@ -48,11 +54,11 @@
     <title>Document</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <style>
-        /* body{
+        body{
             background-image: url("image/a.jpg");
             background-repeat: no-repeat;
             background-size: cover;
-        } */
+        }
         .container {
             margin-top: 30px;
             padding: 40px;
@@ -63,7 +69,7 @@
             text-align: center;
         }
         .error{
-            color: red;
+            color:white;
         }
     </style>
 
@@ -76,12 +82,12 @@
         <form action="" method="POST">
             <h2>USER LOGIN</h2>
             <div class="form-group">
-                <label for="">USER NAME</label>
+                <label for="">USER NAME</label> <span class="error">*<?php  echo $emailarr;?></span>
                 <input type="email" class="form-control" name="email">       
             </div>
 
             <div class="form-group">
-                <label for="">PASSWORD</label>
+                <label for="">PASSWORD</label> <span class="error">*<?php  echo $emailarr;?></span>
                 <input type="password" class="form-control" name="password">
             </div>
             <p class="login-register-text">Not have an account?<a href="ragister.php">Ragister here</a></p>

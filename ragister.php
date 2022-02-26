@@ -11,6 +11,7 @@ $fnamearr = $lnamearr =$pwarr = $cwarr = $genderarr = $agearr = $dojarr = $depta
 $fname = $lname = $email = $gender = $age = $dept = $doj = $sal = $pw = $cw ="";
 
 $query = "SELECT * FROM EMPLOYEE";
+
 if(isset($_REQUEST['submit'])){
     if(!mysqli_query($conn,$query)){
     
@@ -33,10 +34,10 @@ if(isset($_REQUEST['submit'])){
     if(!$tblchk){
         echo mysqli_error($conn);
     }
-}
+    }
 
-   $filesize = $_FILES['file']['size'];   
-    
+    $filesize = $_FILES['file']['size']; 
+   
     if(empty($_POST['fname'])){
         $fnamearr = "fname is required";}
     elseif(!preg_match("/^[a-zA-Z-' ]*$/",$_POST['fname'])){
@@ -82,7 +83,7 @@ if(isset($_REQUEST['submit'])){
     elseif($filesize > 1000000){
         $imgarr = "image file must be less than 1 mb"; } 
     elseif(empty($filesize)){
-        $imgarr = "image file muat be required";}     
+        $imgarr = "image file muat be required";}   
 
     else{
 
@@ -104,24 +105,19 @@ if(isset($_REQUEST['submit'])){
 
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
-
-    // $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
-    // $emailchk = mysqli_query($conn,$email);
-    // $result = mysqli_num_rows($emailchk);
-    // if($result > 0){
-    //     $emailarr = "alredy exist your email";
-    // }
-    
-        $insert = "INSERT INTO EMPLOYEE
+    $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
+    $emailchk = mysqli_query($conn,$email);
+    $result = mysqli_num_rows($emailchk);  
+    if($result>0){
+        $emailarr = "alredy exist";
+    }
+    $insert = "INSERT INTO EMPLOYEE
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
     
         if(mysqli_query($conn,$insert)){
             header('location:user_login.php');
-        }
-    
-    
-        
+        }  
     
     } 
 

@@ -54,7 +54,7 @@ if(isset($_REQUEST['login'])){
         </form>
     </div>
     <div class="a">
-        <img src="..//s1.jpg" height="450px" width="650px"><br>
+        <img src="image/s1.jpg" height="450px" width="650px"><br>
         <form action="" method="POST">
         <button value="submit" class="btn btn-warning" name="login">ADMIN</button>
         </form>
