@@ -36,6 +36,11 @@ if(isset($_REQUEST['submit'])){
     }
     }
 
+    $email = $_POST['email'];
+
+    $email01 = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
+    $emailchk = mysqli_query($conn,$email01);
+    $result = mysqli_num_rows($emailchk);  
     $filesize = $_FILES['file']['size']; 
    
     if(empty($_POST['fname'])){
@@ -50,6 +55,8 @@ if(isset($_REQUEST['submit'])){
         $emailarr = "email is required";}
     elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)){
         $emailarr = "invaild formet";}
+    elseif ($result) {
+            $emailarr = 'this email is already registered';}
     elseif(empty($_POST['p_word'])){
         $pwarr = "password is required"; }
     elseif(!preg_match("/[a-z'@,!,#,$,%,^,&,*,+']+/",$_POST['p_word'])){
@@ -105,22 +112,15 @@ if(isset($_REQUEST['submit'])){
 
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
-    $email = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
-    $emailchk = mysqli_query($conn,$email);
-    $result = mysqli_num_rows($emailchk);  
-    if($result>0){
-        $emailarr = "alredy exist";
-    }
+
     $insert = "INSERT INTO EMPLOYEE
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
     
         if(mysqli_query($conn,$insert)){
             header('location:user_login.php');
-        }  
-    
-    } 
-
+        } 
+    }
 }
 
 ?>

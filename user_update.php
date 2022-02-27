@@ -173,7 +173,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
             <div class="form-group">
                 <label>DEPARTMENT</label>
                 <select name="dept" class="form-control">
-                <option><?php echo $rows['dept'];?></option>
+                <option value="<?php echo $rows['dept'];?>" selected><?php echo $rows['dept'];?></option>
                 <option value="purchase">Purchase</option>
                 <option value="sal">Sal</option>
                 <option value="marketing">Marketing</option>

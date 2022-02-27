@@ -32,31 +32,41 @@ if(isset($_REQUEST['login'])){
         }
         .size{
             display:flex;
-            margin:20px;
+            justify-content: center;
+            margin-top:110px;
             padding:30px;
         }
         .a{
-            margin:20px;
+            padding:30px;
+        }
+        h1{
+            color:white;
+        }
+        body{
+            background-image: url("image/ocean.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
         }
     </style>
 </head>
 <body>
     
-    <nav class="navbar bg-dark p-2">
-        <button class="btn btn-warning">home</button>
+    <nav class="navbar p-2">
+        <h1>ANGEL</h1>
+        <!-- <button class="btn btn-warning">home</button> -->
     </nav>
-
+    
     <div class="size">
     <div class="a">
-        <img src="image/b.jpg" height="450px" width="650px"><br>
+        <img src="image/users.png" height="270px" width="330px" class="rounded-circle"><br>
         <form action="" method="POST">
-        <button value="submit" class="btn btn-warning" name="submit">USERS</button>
+        <button value="submit" class="btn btn-outline-warning btn-lg" name="submit">USERS</button>
         </form>
     </div>
     <div class="a">
-        <img src="image/s1.jpg" height="450px" width="650px"><br>
+        <img src="image/admin.png" height="270px" width="300px" class="rounded-circle"><br>
         <form action="" method="POST">
-        <button value="submit" class="btn btn-warning" name="login">ADMIN</button>
+        <button value="submit" class="btn btn-outline-warning btn-lg" name="login">ADMIN</button>
         </form>
     </div>
     </div>
