@@ -3,7 +3,6 @@
 $conn = mysqli_connect("localhost","root","");
 if($conn){
 
-    
     if(!mysqli_select_db($conn,"tutorial")){
         $createdb = " CREATE DATABASE TUTORIAL";
         if(mysqli_query($conn,$createdb)){

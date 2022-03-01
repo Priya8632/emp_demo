@@ -34,26 +34,39 @@ if (!$result) {
     <link href="bootstrap.min.css" rel="stylesheet">
     <style>
         body{
-            margin:10px;
-        }
-        table{
-            margin-top:50px;
+            margin:0px;
         }
         h2{
             color:white;
-            float:right;
+            float:left;
         }
-        
+        .container{
+            float:right;
+            margin:20px;
+        }
+
     </style>
 </head>
 <body>
-<nav class="bg-dark p-3">
+
+<nav class="navbar bg-dark p-3">
+<div class="container-fluid">
     <h2><?php echo $adarr['username'];?></h2>
-    <div class="container-fluid">
         <a href="admin_logout.php" class="btn btn-danger">LOGOUT</a>
-        <a href="add_user.php" class="btn btn-primary">ADD USER</a> 
     </div>
 </nav>
+
+    
+<a href="add_user.php" class="btn btn-success" style="margin:20px;">ADD USER</a> 
+
+<div class="container">
+    <form>
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="search">
+        <button type="submit" class="btn btn-primary">Search</button>
+    </div>
+    </form>
+</div>
 
     <div class="table-responsive"> 
         <table class="table table-hover">
@@ -89,7 +102,7 @@ if (!$result) {
                     <td><?php echo $data['sal']; ?></td>
                     <td><?php echo $data['hobby'];?></td>
                     <td><img src="<?php echo $data['img'];?>" width="60px"></td>
-                    <td><a href="update.php?update=<?php echo $data['id'];?>"class="btn btn-primary">UPDATE
+                    <td><a href="update.php?update=<?php echo $data['id'];?>"class="btn btn-primary" style="margin-right:5px;">UPDATE
                     <a href="delete.php?delete=<?php echo $data['id'];?>" class="btn btn-danger">DELETE</a></td>
                 </tr>
             <?php } ?>
