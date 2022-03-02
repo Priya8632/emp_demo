@@ -58,7 +58,7 @@ if (!$myData) {
         <table class="table table-borderless table-dark">
             <tr>
                 <th class="th-dark">Id</th>
-                <td> <?php echo $myData['id'];?> </td>
+                <td><?php echo $myData['id'];?> </td>
             </tr>
             <tr>
                 <th>Fisrt_Name</th>
@@ -102,7 +102,8 @@ if (!$myData) {
             </tr>
             <tr>
                 <th>Photo</th>
-                <td><img src="<?php echo $myData['img']; ?>" alt="Network Error" hright='100px' width='100px'> </td>
+                <!-- <td><?php echo $myData['img']; ?></td> -->
+                <td><img src="<?php echo $myData['img']; ?>" alt="Network Error" hright='100px' width='100px'></td>
             </tr>
             <tr>
                 <td colspan="2"><a href="user_update.php?update_id=<?php echo $myData['id'];?>"><button class="btn btn-warning">Update</button></a></td>

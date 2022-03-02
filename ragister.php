@@ -28,7 +28,7 @@ if(isset($_REQUEST['submit'])){
         doj date,
         sal int(5),
         hobby text,
-        img longblob
+        img text
     )";
     $tblchk = mysqli_query($conn,$createtbl);
     if(!$tblchk){

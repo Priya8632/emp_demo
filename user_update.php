@@ -85,8 +85,8 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
     $alldata= implode(",",$chkbox);
 
       $target_dir = "image/";
-    
-      if(!file_exists($_FILES["file"]["tmp_name"])){
+      
+      if(!file_exists($_FILES['file']['tmp_name'])){
         $imagepath = $rows['img'];
       }else{
         $imagePath = $target_dir . basename($_FILES['file']['name']);
@@ -204,9 +204,7 @@ $fname = $lname =$email = $pw = $cw = $gender = $age = $dept = $doj = $sal =$chk
 
 
             <div class="form-group">
-                <button type="submit" class="btn btn-success" name="submit">UPDATE</button>
-                <a href="user_welcome.php" class="btn btn-info">Back </a>
-                
+                <button type="submit" class="btn btn-success" name="submit">UPDATE</button>                
             </div>
         </form>       
     </div>

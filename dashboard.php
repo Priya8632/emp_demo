@@ -62,9 +62,18 @@ if (!$result) {
 <div class="container">
     <form>
     <div class="input-group">
-        <input type="text" class="form-control" placeholder="search">
-        <button type="submit" class="btn btn-primary">Search</button>
-    </div>
+        <select class="search_select_box">
+            <option value=""></option>
+            <option>id</option>
+            <option>fname</option>
+            <option>lname</option>
+            <option>age</option>
+            <option>department</option>
+            <option>hobbies</option>
+        </select>
+            <input type="text" class="form-control w-50" placeholder="search">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
     </form>
 </div>
 

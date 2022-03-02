@@ -24,7 +24,7 @@ if(!mysqli_query($conn,$query)){
         doj date,
         sal int(5),
         hobby text,
-        img longblob
+        img text
     )";
     $tblchk = mysqli_query($conn,$createtbl);
     if(!$tblchk){
@@ -95,7 +95,7 @@ if(isset($_REQUEST['submit'])){
     $lname = $_POST['lname'];
     $email = $_POST['email'];
     $pw = base64_encode($_POST['p_word']);
-    $cw = base64_encode($_POST['c_word']);
+    $cw = $_POST['c_word'];
     $gender = $_POST['gender'];
     $age = $_POST['age'];
     $dept = $_POST['dept'];
