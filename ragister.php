@@ -10,12 +10,12 @@ $error="";
 $fnamearr = $lnamearr =$pwarr = $cwarr = $genderarr = $agearr = $dojarr = $deptarr = $salarr = $hobbiarr= $emailarr = $imgarr="";
 $fname = $lname = $email = $gender = $age = $dept = $doj = $sal = $pw = $cw ="";
 
-$query = "SELECT * FROM EMPLOYEE";
+$query = "SELECT * FROM EMPLOYEE1";
 
 if(isset($_REQUEST['submit'])){
     if(!mysqli_query($conn,$query)){
     
-    $createtbl = "CREATE TABLE EMPLOYEE(
+    $createtbl = "CREATE TABLE EMPLOYEE1(
         id int(10) auto_increment primary key,
         fname text,
         lname text,
@@ -38,7 +38,7 @@ if(isset($_REQUEST['submit'])){
 
     $email = $_POST['email'];
 
-    $email01 = "SELECT * FROM EMPLOYEE WHERE email ='$email'";
+    $email01 = "SELECT * FROM EMPLOYEE1 WHERE email ='$email'";
     $emailchk = mysqli_query($conn,$email01);
     $result = mysqli_num_rows($emailchk);  
     $filesize = $_FILES['file']['size']; 
@@ -113,7 +113,7 @@ if(isset($_REQUEST['submit'])){
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
 
-    $insert = "INSERT INTO EMPLOYEE
+    $insert = "INSERT INTO EMPLOYEE1
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
     

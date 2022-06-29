@@ -1,7 +1,5 @@
 <?php
 
-
-
 include 'config.php';
 $id = $_GET['update'];
 $query = "SELECT * FROM EMPLOYEE WHERE id = $id";
@@ -124,22 +122,25 @@ if(isset($_POST['submit'])){
 
             <div class="form-group">
                 <label>FNAME</label>
-                <input type="text" name="fname" class="form-control" value=<?php  echo $data['fname']?>><span class="error">* <?php echo $fnamearr; ?>
-            </span>
+                <input type="text" name="fname" class="form-control" value=<?php  echo $data['fname']?>>
+                <span class="error">* <?php echo $fnamearr; ?></span>
             </div>
 
             <div class="form-group">
                 <label>LNAME</label>
-                <input type="text" name="lname" class="form-control" value=<?php echo $data['lname']?>><span class="error">*<?php echo $lnamearr; ?></span>
+                <input type="text" name="lname" class="form-control" value=<?php echo $data['lname']?>>
+                <span class="error">*<?php echo $lnamearr; ?></span>
             </div>
             <div class="form-group">
                 <label for="">EMAIL</label>
-                <input type="text" name="email" class="form-control" value=<?php echo $data['email'];?>><span class="error">* <?php echo $emailarr;?></span>
+                <input type="text" name="email" class="form-control" value=<?php echo $data['email'];?>>
+                <span class="error">* <?php echo $emailarr;?></span>
             </div>
 
             <div class="form-group">
                 <label for="">PASSWORD</label>
-                <input type="password" name="p_word" class="form-control" value=<?php echo base64_decode($data['p_word']);?>><span class="error">* <?php echo $pwarr; ?></span>
+                <input type="password" name="p_word" class="form-control" value=<?php echo base64_decode($data['p_word']);?>>
+                <span class="error">* <?php echo $pwarr; ?></span>
             </div>
             
             <div class="form-group">
@@ -151,7 +152,8 @@ if(isset($_POST['submit'])){
 
             <div class="form-group">
                 <label>AGE</label>
-                <input type="text" name="age" class="form-control" value=<?php echo $data['age']?>><span class="error">*<?php echo $agearr; ?></span>
+                <input type="text" name="age" class="form-control" value=<?php echo $data['age']?>>
+                <span class="error">*<?php echo $agearr; ?></span>
             </div>
 
             <div class="form-group">
@@ -167,12 +169,14 @@ if(isset($_POST['submit'])){
 
             <div class="form-group">
                 <label>DATE OF JOIN</label>
-                <input type="date" name="doj" value=<?php echo $data['doj']?>><span class="error">*<?php echo $dojarr; ?></span>
+                <input type="date" name="doj" value=<?php echo $data['doj']?>>
+                <span class="error">*<?php echo $dojarr; ?></span>
             </div>
             
             <div class="form-group">
                 <label>SALARY</label>
-                <input type="text" name="sal" class="form-control" value=<?php echo $data['sal']?>><span class="error">*<?php echo $salarr; ?></span>
+                <input type="text" name="sal" class="form-control" value=<?php echo $data['sal']?>>
+                <span class="error">*<?php echo $salarr; ?></span>
             </div>
             <div class="form-group">
                 <label>HOBBIES</label><br>

@@ -15,7 +15,7 @@ $query = "SELECT * FROM admin WHERE id='$aid'";
 $rslt = mysqli_query($conn,$query);
 $adarr = mysqli_fetch_array($rslt);
 
-$selectTable = "SELECT * FROM employee";
+$selectTable = "SELECT * FROM employee1";
 $result = mysqli_query($conn, $selectTable);
 
 if (!$result) {
@@ -46,7 +46,7 @@ if (!$result) {
         }
 
     </style>
-    <script>
+    <!-- <script>
         function showUser(str) {
             if (str == "") {
                 document.getElementById("txtHint").innerHTML = "";
@@ -88,9 +88,9 @@ if (!$result) {
             <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
-    <div id="txtHint"></div>
+    <div id="txtHint"></div> -->
 
-<!-- <nav class="navbar bg-dark p-3">
+<nav class="navbar bg-dark p-3">
 <div class="container-fluid">
     <h2><?php echo $adarr['username'];?></h2>
         <a href="admin_logout.php" class="btn btn-danger">LOGOUT</a>
@@ -158,6 +158,6 @@ if (!$result) {
             <?php } ?>
         </tbody>
     </table>
-    </div>   -->
+    </div> 
 </body>
 </html>

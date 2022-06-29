@@ -12,7 +12,7 @@ if (!isset($_SESSION['id'])) {
 
 
 $id = $_SESSION['id'];
-$sql =  "SELECT * FROM employee WHERE id ='$id'";
+$sql =  "SELECT * FROM employee1 WHERE id ='$id'";
 $result = mysqli_query($conn,$sql);
 $myData = mysqli_fetch_assoc($result);
 
