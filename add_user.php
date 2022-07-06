@@ -7,7 +7,7 @@ if (!isset($_SESSION['aid']) || !isset($_COOKIE['aid'])) {
     header('location:admin_login.php');
 }
 
-$query = "SELECT * FROM EMPLOYEE";
+$query = "SELECT * FROM EMPLOYEE1";
 
 if(!mysqli_query($conn,$query)){
     
@@ -110,7 +110,7 @@ if(isset($_REQUEST['submit'])){
     $imagepath = $target_dir.basename($_FILES['file']['name']);
     $chkfile = move_uploaded_file($_FILES['file']['tmp_name'], $imagepath);
    
-    $insert = "INSERT INTO EMPLOYEE
+    $insert = "INSERT INTO EMPLOYEE1
         (`fname`,`lname`,`email`,`p_word`,`c_word`,`gender`,`age`,`dept`,`doj`,`sal`,`hobby`,`img`) VALUES 
         ('$fname','$lname','$email','$pw','$cw','$gender','$age','$dept','$doj','$sal','$alldata','$imagepath')";
 

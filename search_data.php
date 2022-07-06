@@ -1,44 +1,20 @@
 <?php
-
 include 'config.php';
 
-$q = isset($_GET['q']);
+$search_value = $_GET['q'];
 
-$sql="SELECT * FROM employee WHERE fname = '$q' ";
-$result = mysqli_query($conn,$sql);
+$decode =json_decode($search_value);
+  $input = $decode->srch_input;
+  $field = $decode->field;
+ 
 
-?>
+# search data from user table
+$serch_qry = "SELECT * FROM employee1 WHERE $field LIKE '%$input%' ";
+$result = mysqli_query($conn, $serch_qry);
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-<div class="table-responsive"> 
-        <table class="table table-hover">
-            <thead class="thead-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>FNAME</th>
-                    <th>LNAME</th>
-                    <th>EMAIL</th>
-                    <th>PASSWORD</th>
-                    <th>GENDER</th>
-                    <th>AGE</th>
-                    <th>DAPARTMENT</th>
-                    <th>DATE OF JOIN</th>
-                    <th>SALARY</th>
-                    <th>HOBBIES</th>
-                    <th>IMAGE</th>
-                    <th>OPERATION</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php  while ( $data = mysqli_fetch_assoc($result)) { ?>
+while ( $data = mysqli_fetch_assoc($result)) { 
+    ?>
+
                 <tr>
                     <td><?php echo $data['id']; ?></td>
                     <td><?php echo $data['fname']; ?></td>
@@ -56,8 +32,3 @@ $result = mysqli_query($conn,$sql);
                     <a href="delete.php?delete=<?php echo $data['id'];?>" class="btn btn-danger">DELETE</a></td>
                 </tr>
             <?php } ?>
-        </tbody>
-    </table>
-    </div> 
-</body>
-</html>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 include 'config.php';
 session_start();
@@ -12,7 +12,7 @@ if (!isset($_SESSION['aid'])) {
 
 $aid = $_SESSION['aid'];
 $query = "SELECT * FROM admin WHERE id='$aid'";
-$rslt = mysqli_query($conn,$query);
+$rslt = mysqli_query($conn, $query);
 $adarr = mysqli_fetch_array($rslt);
 
 $selectTable = "SELECT * FROM employee1";
@@ -22,10 +22,19 @@ if (!$result) {
     echo mysqli_error($conn);
 }
 
+#fetch columns from database
+
+// Query to get columns from table
+$query = "SELECT * FROM employee1";
+$result = mysqli_query($conn, $query);
+$assoc = mysqli_fetch_assoc($result);
+
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -33,18 +42,19 @@ if (!$result) {
     <title>Document</title>
     <link href="bootstrap.min.css" rel="stylesheet">
     <style>
-        body{
-            margin:0px;
-        }
-        h2{
-            color:white;
-            float:left;
-        }
-        .container{
-            float:right;
-            margin:20px;
+        body {
+            margin: 0px;
         }
 
+        h2 {
+            color: white;
+            float: left;
+        }
+
+        .container {
+            float: right;
+            margin: 20px;
+        }
     </style>
     <!-- <script>
         function showUser(str) {
@@ -56,7 +66,7 @@ if (!$result) {
                 xmlhttp.onreadystatechange = function() {
                     console.log('ready state', this.readyState);
                     if (this.readyState == 4 && this.status == 200) {
-                       // console.log(xmlhttp.status);
+                       console.log(xmlhttp.status);
                         document.getElementById("txtHint").innerHTML = this.responseText;
                     }
                 };
@@ -64,61 +74,44 @@ if (!$result) {
                 xmlhttp.send();
             }
         }
-    </script>
+    </script> -->
 
 </head>
+
 <body>
 
-<nav class="navbar bg-dark p-3">
+    <nav class="navbar bg-dark p-3">
         <div class="container-fluid">
             <h2><?php echo $adarr['username']; ?></h2>
             <a href="admin_logout.php" class="btn btn-danger">LOGOUT</a>
         </div>
     </nav>
 
+
+<!-- search bar start -->
     <a href="add_user.php" class="btn btn-success" style="margin:20px;">ADD USER</a>
     <div class="container">
-        <form class="form-inline my-2 my-lg-0">
-            <select name="users" onchange="showUser(this.value)" class="form-control">
-                <option>--SELECT--</option>
-                <option value="priya">priya</option>
-                <option value="gita">gita</option>
-            </select>
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+        <form class="form-inline my-2 my-lg-0" method="POST">
+            <input class="form-control mr-sm-2" type="text" placeholder="Search  by " aria-label="Search" id="search" disabled onkeyup="searchData()">
+            <div class="form-ckeck" width="5">
+
+                <select class="form-control" id="search_dropdown" onchange="placeholder()">
+                    <option value="" selected disabled>select from here</option>
+                    <?php foreach ($assoc as $i => $key) {
+                        if ($i == 'photo' || $i == 'password') {
+                            continue;
+                        }
+                    ?>
+                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <?php }   ?>
+                </select>
+            </div>
+            <!-- <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button> -->
         </form>
     </div>
-    <div id="txtHint"></div> -->
+<!-- search bar end -->
 
-<nav class="navbar bg-dark p-3">
-<div class="container-fluid">
-    <h2><?php echo $adarr['username'];?></h2>
-        <a href="admin_logout.php" class="btn btn-danger">LOGOUT</a>
-    </div>
-</nav>
-
-    
-<a href="add_user.php" class="btn btn-success" style="margin:20px;">ADD USER</a> 
-
-<div class="container">
-    <form>
-    <div class="input-group">
-        <select class="search_select_box">
-            <option value=""></option>
-            <option>id</option>
-            <option>fname</option>
-            <option>lname</option>
-            <option>age</option>
-            <option>department</option>
-            <option>hobbies</option>
-        </select>
-            <input type="text" class="form-control w-50" placeholder="search">
-            <button type="submit" class="btn btn-primary">Search</button>
-        </div>
-    </form>
-</div>
-
-    <div class="table-responsive"> 
+    <div class="table-responsive">
         <table class="table table-hover">
             <thead class="thead-dark">
                 <tr>
@@ -137,27 +130,66 @@ if (!$result) {
                     <th>OPERATION</th>
                 </tr>
             </thead>
-            <tbody>
-            <?php  while ( $data = mysqli_fetch_assoc($result)) { ?>
-                <tr>
-                    <td><?php echo $data['id']; ?></td>
-                    <td><?php echo $data['fname']; ?></td>
-                    <td><?php echo $data['lname'];?></td>
-                    <td><?php echo $data['email']; ?></td>
-                    <td><?php echo $data['p_word']; ?></td>
-                    <td><?php echo $data['gender']; ?></td>
-                    <td><?php echo $data['age']; ?></td>
-                    <td><?php echo $data['dept']; ?></td>
-                    <td><?php echo $data['doj']; ?></td>
-                    <td><?php echo $data['sal']; ?></td>
-                    <td><?php echo $data['hobby'];?></td>
-                    <td><img src="<?php echo $data['img'];?>" width="60px"></td>
-                    <td><a href="update.php?update=<?php echo $data['id'];?>"class="btn btn-primary" style="margin-right:5px;">UPDATE
-                    <a href="delete.php?delete=<?php echo $data['id'];?>" class="btn btn-danger">DELETE</a></td>
-                </tr>
-            <?php } ?>
-        </tbody>
-    </table>
-    </div> 
+            <tbody id="rows">
+                <?php while ($data = mysqli_fetch_assoc($result)) { ?>
+                    <tr>
+                        <td><?php echo $data['id']; ?></td>
+                        <td><?php echo $data['fname']; ?></td>
+                        <td><?php echo $data['lname']; ?></td>
+                        <td><?php echo $data['email']; ?></td>
+                        <td><?php echo $data['p_word']; ?></td>
+                        <td><?php echo $data['gender']; ?></td>
+                        <td><?php echo $data['age']; ?></td>
+                        <td><?php echo $data['dept']; ?></td>
+                        <td><?php echo $data['doj']; ?></td>
+                        <td><?php echo $data['sal']; ?></td>
+                        <td><?php echo $data['hobby']; ?></td>
+                        <td><img src="<?php echo $data['img']; ?>" width="60px"></td>
+                        <td><a href="update.php?update=<?php echo $data['id']; ?>" class="btn btn-primary" style="margin-right:5px;">UPDATE
+                            <a href="delete.php?delete=<?php echo $data['id']; ?>" class="btn btn-danger">DELETE</a></td>
+                    </tr>
+                <?php } ?>
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        let searchbar = document.getElementById("search");
+        let search_drop = document.getElementById("search_dropdown");
+
+        function placeholder() {
+
+
+            searchbar.placeholder = 'search by ' + search_drop.value;
+            searchbar.disabled = false;
+        }
+
+        function searchData() {
+            let str = {
+                srch_input: searchbar.value,
+                field: search_drop.value
+            }
+            str = JSON.stringify(str);
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    document.getElementById("rows").innerHTML = this.response;
+                }
+            }
+
+            xhr.open("GET", "search_data.php?q=" + str, true);
+            xhr.send();
+        }
+    </script>
+
+
+    <script src="serch.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+
+
 </body>
+
 </html>

@@ -195,8 +195,7 @@ if(isset($_REQUEST['submit'])){
                 <label>DEPARTMENT</label>
                 <select name="dept" class="form-control">
                     
-                    <option value="select"
-                    ><?php if(isset($_POST['dept'])) { echo $_POST['dept'];}?></option>
+                    <option value="select"><?php if(isset($_POST['dept'])) { echo $_POST['dept'];}?></option>
                     <option value="purchase">Purchase</option>
                     <option value="sal">Sal</option>
                     <option value="marketing">Marketing</option>
